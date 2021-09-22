@@ -1,3 +1,4 @@
+import Filter from 'bad-words'
 import express from 'express'
 import http from 'http'
 import path from 'path'
@@ -16,6 +17,13 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('message', 'A new user has joined!')
 
   socket.on('sendMessage', (message, callback) => {
+    const filter = new Filter()
+
+    if (filter.isProfane(message)) {
+      const errorMsg = 'Profanity is not allowed!'
+      return callback(errorMsg)
+    }
+
     io.emit('message', message)
     callback()
   })
