@@ -3,7 +3,7 @@ import http from 'http'
 import path from 'path'
 import { Server } from 'socket.io'
 import { generateMessage } from './utils/messages'
-import { translator } from './utils/translator'
+import { translateMessage } from './utils/translator'
 import { addUser, getUser, removeUser } from './utils/users'
 
 const app = express()
@@ -13,7 +13,7 @@ const io = new Server(httpServer)
 app.use(express.static(path.join(__dirname, '../public')))
 
 io.on('connection', (socket) => {
-  console.log('New Websocket connection')
+  // console.log('New Websocket connection')
 
   socket.on('join', (options, callback) => {
     const { error, user } = addUser({ id: socket.id, ...options })
@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', async (message, callback) => {
     const user = getUser(socket.id)
 
-    const translatedMsg = await translator(message, user!.locale)
+    const translatedMsg = await translateMessage(message, user!.locale)
 
     io.to(user!.room).emit('message', generateMessage(user!.username, translatedMsg))
     callback()

@@ -1,6 +1,6 @@
 import translate, { DeeplLanguages } from 'deepl'
 
-export async function translator (message: string, locale: DeeplLanguages) {
+export async function translateMessage (message: string, locale: DeeplLanguages) {
   let translatedMsg = ''
   try {
     const response = await translate({
@@ -15,7 +15,7 @@ export async function translator (message: string, locale: DeeplLanguages) {
       translatedMsg += ' '
     })
   } catch (err) {
-    console.log(err)
+    translatedMsg = 'Could not translate'
   }
 
   return translatedMsg
