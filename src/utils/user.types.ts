@@ -1,5 +1,8 @@
+import { DeeplLanguages } from 'deepl'
+
 export type User = {
-id: number
+id: string
 username: string,
-room: string
+room: string,
+locale: DeeplLanguages
 }

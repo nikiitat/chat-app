@@ -47,6 +47,13 @@ button {
     transition: background .3s ease;
 }
 
+select {
+    border: 1px solid #eeeeee;
+    padding: 8px;
+    margin-bottom: 8px;
+    outline: none;
+}
+
 button:hover {
     background: #6b47b8;
 }

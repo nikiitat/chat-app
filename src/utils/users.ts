@@ -2,7 +2,7 @@ import { User } from './user.types'
 
 const users: User[] = []
 
-export const addUser = ({ id, username, room }: User) => {
+export const addUser = ({ id, username, room, locale }: User) => {
   username = username.trim().toLowerCase()
   room = room.trim().toLowerCase()
 
@@ -14,11 +14,19 @@ export const addUser = ({ id, username, room }: User) => {
     return user.room === room && user.username === username
   })
 
+  const existingLocale = users.find((user) => {
+    return user.room === room && user.locale !== locale
+  })
+
   if (existingUser) {
     return { error: 'Username is in use!' }
   }
 
-  const user: User = { id, username, room }
+  if (existingLocale) {
+    return { error: 'Locale is in use!' }
+  }
+
+  const user: User = { id, username, room, locale }
   users.push(user)
   return { user }
 }
@@ -39,9 +47,10 @@ export const getUsersInTheRoom = (room: User['room']) => {
   return users.filter((user) => user.room === room)
 }
 
-// addUser({ id: 1, username: 'ss', room: 'assd' })
-// addUser({ id: 2, username: 'adsadads', room: 'assd' })
-// addUser({ id: 3, username: 'ss', room: 'adsa' })
+// console.log(addUser({ id: '1', username: 'ss', room: 'assd', locale: 'EN' }))
+// console.log(addUser({ id: '2', username: 'aaa', room: 'assd', locale: 'DE' }))
+
+// addUser({ id: 3, username: 'ss', room: 'adsa', locale: 'SP' })
 // console.log(users)
 
 // console.log(getUsersInTheRoom('assd'))

@@ -9,13 +9,7 @@ const $messages = document.querySelector('#messages')
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
-
-socket.on('message', (message) => {
-  console.log(message)
-  const html = Mustache.render(messageTemplate, { message: message.text, createdAt: moment(message.createdAt).format('h:mm a') })
-  $messages.insertAdjacentHTML('beforeend', html)
-})
+const { username, room, locale } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 $messageForm.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -35,7 +29,14 @@ $messageForm.addEventListener('submit', (e) => {
   })
 })
 
-socket.emit('join', { username, room }, (error) => {
+socket.on('message', (message) => {
+  console.log(message)
+  const html = Mustache.render(messageTemplate, { username: message.username, message: message.text, createdAt: moment(message.createdAt).format('h:mm a') })
+  $messages.insertAdjacentHTML('beforeend', html)
+})
+
+socket.emit('join', { username, room, locale }, (error) => {
+  console.log(locale)
   if (error) {
     alert(error)
     location.href = '/'

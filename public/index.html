@@ -4,7 +4,7 @@
 
 <head>
     <title>Chat App</title>
-    <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
@@ -16,6 +16,14 @@
                 <input type="text" name="username" placeholder="Display name" required>
                 <label>Room</label>
                 <input type="text" name="room" placeholder="Room" required>
+                <label for="locale">Choose Room Language</label>
+                <select name="locale" value="English">
+                    <option value="EN">English</option>
+                    <option value="DE">Deutsch</option>
+                    <option value="FR">French</option>
+                    <option value="SP">Spanish</option>
+                  </select>
+
                 <button>Join</button>
             </form>
         </div>
